@@ -25,9 +25,21 @@ test('returns the sum when a custom delimiter is used', () => {
 });
 
 test('throws an exception for negative numbers', () => {
-  expect(() => add("1,-2,3")).toThrow("negatives numbers not allowed: -2");
+  expect(() => add("1,-2,3")).toThrow("negatives not allowed: -2");
 });
 
 test('throws an exception with all negative numbers', () => {
-  expect(() => add("1,-2,3,-4")).toThrow("negatives numbers not allowed: -2,-4");
+  expect(() => add("1,-2,3,-4")).toThrow("negatives not allowed: -2,-4");
+});
+
+test('ignores numbers greater than 1000', () => {
+  expect(add("2,1001")).toBe(2);
+});
+
+test('supports delimiters of any length', () => {
+  expect(add("//[***]\n1***2***3")).toBe(6);
+});
+
+test('supports multiple delimiters', () => {
+  expect(add("//[*][%]\n1*2%3")).toBe(6);
 });
